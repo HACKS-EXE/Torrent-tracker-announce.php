@@ -1,9 +1,15 @@
-# Easy Torrent Tracker
+# Easy Torrent Tracker [<img src="https://github.com/devicons/devicon/blob/master/icons/github/github-original-wordmark.svg" title="Home" alt="GitHub" width="100" height="100" align = "left"/>](https://github.com/HACKS-EXE/Torrent-tracker-announce.php) [<img src="https://arquivo.devmedia.com.br/noticias/artigos/artigo_introducao-ao-php_32540.png" title="Home" alt="GitHub" width="150" height="100" align = "Right"/>](https://github.com/HACKS-EXE/Torrent-tracker-announce.php)
 
 Easy, simple and yet fast torrent tracker created in PHP.
 
+New and future implementations come from:
+[<img src="https://github.com/devicons/devicon/blob/master/icons/php/php-original.svg" title="Trackers Fix" alt="GitHub" width="50" height="50" align = "center"/>](https://github.com/abixalmon/BtiTracker/blob/master/announce.php)
+
 Based on Nsuan's incredible work, source:
-https://gist.github.com/nsuan/1967006
+[<img src="https://github.com/devicons/devicon/blob/master/icons/github/github-original.svg" title="Source" alt="GitHub" width="50" height="50" align = "center"/>](https://gist.github.com/nsuan/1967006)
+
+If errors occur when using, replace with:
+[<img src="https://github.com/devicons/devicon/blob/master/icons/php/php-original.svg" title="Source" alt="GitHub" width="50" height="50" align = "center"/>](https://gist.github.com/nsuan/1967006)
 
 ## Pre-note
 
