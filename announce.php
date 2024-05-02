@@ -57,7 +57,7 @@ define('__LOCATION_PEERS', 'Bittorrent.Peers');
 //This allows NATed clients to get updates much faster, but it also
 //takes more load on the server.
 //(This is just an experimental feature which may be turned off)
-define('__ENABLE_SHORT_ANNOUNCE', true);
+define('__ENABLE_SHORT_ANNOUNCE', false);
 
 //In case someone tries to access the tracker using a browser,
 //redirect to this URL or file
@@ -131,7 +131,7 @@ function is_seed() {
 //Save database to file
 function db_save($data) {
 	$b = serialize($data);
-	$h = @fopen(__LOCATION_PEERS, 'w+');
+	$h = @fopen(__LOCATION_PEERS, 'w');
 	if (!$h) { return false; }
 	if (!@flock($h, LOCK_EX)) { return false; }
 	@fwrite($h, $b . PHP_EOL);
@@ -274,10 +274,10 @@ $d[$sum] = array(
     $peer_id,                // ID do peer
     $_GET['port'],           // Porta do peer
     $expire,                 // Tempo de expiração
+    $info_hash,              // Hash de informação do arquivo
     $_SERVER['HTTP_USER_AGENT'], // Agente do usuário (cliente BitTorrent)
     $_GET['key'],            // Chave do cliente (se houver)
-	$info_hash,              // Hash de informação do arquivo
-	is_seed()                // Indicador de se o cliente é um seed ou leecher
+    is_seed()                // Indicador de se o cliente é um seed ou leecher
 );
 
 //No point in saving the user agent, unless we are debugging
