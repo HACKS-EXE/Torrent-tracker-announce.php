@@ -26,7 +26,7 @@
 define('__DEBUGGING_ON', false);
 
 //What version are we at?
-define('__VERSION', 1.4.5);
+define('__VERSION', 1.3);
 
 //How often should clients pull server for new clients? (Seconds)
 define('__INTERVAL', 1800);
@@ -71,14 +71,14 @@ define('__REDIR_BROWSER', 'https://github.com/ngosang/trackerslist');
 header('Content-type: Text/Plain');
 header('X-Tracker-Version: Bitstorm '.__VERSION.' by ck3r.org'); //Please give me some credit
 
-$downloaded = (float)($_GET["downloaded"]);
-$uploaded = (float)($_GET["uploaded"]);
+/* $downloaded = (float)($_GET["downloaded"]);
+$uploaded = (float)($_GET["uploaded"]); */
 
 //If you *really* dont want to, comment this line out
 //Bencoding function, returns a bencoded dictionary
 //You may go ahead and enter custom keys in the dictionary in
 //this function if you'd like.
-function track($list, $interval=60, $min_ival=0, $downloaded=0, $uploaded=0) {
+function track($list, $interval=60, $min_ival=0) {
 	if (is_string($list)) { //Did we get a string? Return an error to the client
 		return 'd14:failure reason'.strlen($list).':'.$list.'e';
 	}
@@ -105,7 +105,7 @@ function track($list, $interval=60, $min_ival=0, $downloaded=0, $uploaded=0) {
 	}
 	//Add some other parameters in the dictionary and merge with peer list
 	$r = 'd8:intervali'.$interval.'e12:min intervali'.$min_ival.'e8:completei'.$c.'e10:incompletei'.$i.'e5:peersl'.$p.'ee';
-	$r .= ', downloaded='.$downloaded.', uploaded='.$uploaded; // Add downloaded and uploaded values
+	/* $r .= ', downloaded='.$downloaded.', uploaded='.$uploaded; // Add downloaded and uploaded values */
 	return $r;
 }
 
