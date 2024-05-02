@@ -274,10 +274,10 @@ $d[$sum] = array(
     $peer_id,                // ID do peer
     $_GET['port'],           // Porta do peer
     $expire,                 // Tempo de expiração
-	$info_hash,              // Hash de informação do arquivo
     $_SERVER['HTTP_USER_AGENT'], // Agente do usuário (cliente BitTorrent)
+    $info_hash,              // Hash de informação do arquivo
     $_GET['key'],            // Chave do cliente (se houver)
-	is_seed()                // Indicador de se o cliente é um seed ou leecher
+    is_seed()                // Indicador de se o cliente é um seed ou leecher
 );
 
 //No point in saving the user agent, unless we are debugging
