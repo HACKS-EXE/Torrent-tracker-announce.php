@@ -26,7 +26,7 @@
 define('__DEBUGGING_ON', false);
 
 //What version are we at?
-define('__VERSION', 1.3);
+define('__VERSION', 1.5);
 
 //How often should clients pull server for new clients? (Seconds)
 define('__INTERVAL', 1800);
@@ -241,9 +241,6 @@ if (!ctype_digit($_GET['port']) || $_GET['port'] < 1 || $_GET['port'] > 65535) {
 	die(track('Invalid client port'));
 }
 
-//Array key, unique for each client and torrent
-$sum = sha1($_GET['peer_id'].$_GET['info_hash']);
-
 //Make sure we've got a user agent to avoid errors
 //Used for debugging
 if (!isset($_SERVER['HTTP_USER_AGENT'])) {
@@ -253,6 +250,16 @@ if (!isset($_SERVER['HTTP_USER_AGENT'])) {
 //When should we remove the client?
 $expire = time()+$interval;
 
+// Many thanks to KktoMx for figuring out this head-ache causer,
+// and to bideomex for showing me how to do it PROPERLY... :)
+$info_hash = bin2hex(stripslashes($_GET["info_hash"]));
+$peer_id = bin2hex(stripslashes($_GET["peer_id"]));
+$info_hash = bin2hex($_GET["info_hash"]);
+$peer_id = bin2hex($_GET["peer_id"]);
+
+//Array key, unique for each client and torrent
+$sum = sha1($_GET["peer_id"].$_GET["info_hash"]);
+
 //Have this client registered itself before? Check that it uses the same key
 if (isset($d[$sum])) {
 	if ($d[$sum][6] !== $_GET['key']) {
@@ -261,23 +268,16 @@ if (isset($d[$sum])) {
 	}
 }
 
-// Many thanks to KktoMx for figuring out this head-ache causer,
-// and to bideomex for showing me how to do it PROPERLY... :)
-$info_hash = bin2hex(stripslashes($_GET["info_hash"]));
-$peer_id = bin2hex(stripslashes($_GET["peer_id"]));
-$info_hash = bin2hex($_GET["info_hash"]);
-$peer_id = bin2hex($_GET["peer_id"]);
-
 // Add/update the client in our global list of clients, with some information
 $d[$sum] = array(
     $_SERVER['REMOTE_ADDR'], // IP do cliente
     $peer_id,                // ID do peer
     $_GET['port'],           // Porta do peer
     $expire,                 // Tempo de expiração
-    $info_hash,              // Hash de informação do arquivo
+	$info_hash,              // Hash de informação do arquivo
     $_SERVER['HTTP_USER_AGENT'], // Agente do usuário (cliente BitTorrent)
     $_GET['key'],            // Chave do cliente (se houver)
-    is_seed()                // Indicador de se o cliente é um seed ou leecher
+	is_seed()                // Indicador de se o cliente é um seed ou leecher
 );
 
 //No point in saving the user agent, unless we are debugging
