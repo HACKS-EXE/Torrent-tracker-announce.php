@@ -1,6 +1,5 @@
 <?php
-//multiple tracks add
-
+//Support for multiple files
 /*
 * Bitstorm - A small and fast Bittorrent tracker
 * Copyright 2008 Peter Caprioli
@@ -28,7 +27,7 @@
 define('__DEBUGGING_ON', false);
 
 //What version are we at?
-define('__VERSION', 1.3);
+define('__VERSION', 2.0);
 
 //How often should clients pull server for new clients? (Seconds)
 define('__INTERVAL', 1800);
@@ -48,12 +47,6 @@ define('__NO_PEER_ID', true);
 //Should seeders not see each others?
 //Hint: Should be set to true
 define('__NO_SEED_P2P', true);
-
-//Where should we save the peer database
-//On Linux, you should use /dev/shm as it is very fast.
-//On Windows, you will need to change this value to some
-//other valid path such as C:/Peers.txt
-define('__LOCATION_PEERS', 'Bittorrent.Peers');
 
 //Should we enable short announces?
 //This allows NATed clients to get updates much faster, but it also
@@ -127,11 +120,11 @@ function is_seed() {
 
 //Save database to file
 function db_save($data, $info_hash) {
-	$log_dir = 'logs';
+	$log_dir = 'Torrents-Files';
 	if (!is_dir($log_dir)) {
 		mkdir($log_dir, 0777, true);
 	}
-	$log_file = $log_dir . '/' . bin2hex($info_hash) . '.json';
+	$log_file = $log_dir . '/' . bin2hex($info_hash) . '.torrents.files';
 	$b = serialize($data);
 	$h = @fopen($log_file, 'w');
 	if (!$h) { return false; }
@@ -143,8 +136,8 @@ function db_save($data, $info_hash) {
 
 //Load database from file
 function db_open($info_hash) {
-	$log_dir = 'logs';
-	$log_file = $log_dir . '/' . bin2hex($info_hash) . '.json';
+	$log_dir = 'Torrents-Files';
+	$log_file = $log_dir . '/' . bin2hex($info_hash) . '.torrents.files';
 	$p = '';
 	$m = '';
 	$h = @fopen($log_file, 'r');
@@ -159,8 +152,8 @@ function db_open($info_hash) {
 
 //Check if DB file exists, otherwise create it
 function db_exists($info_hash, $create_empty=false) {
-	$log_dir = 'logs';
-	$log_file = $log_dir . '/' . bin2hex($info_hash) . '.json';
+	$log_dir = 'Torrents-Files';
+	$log_file = $log_dir . '/' . bin2hex($info_hash) . '.torrents.files';
 	if (file_exists($log_file)) {
 		return true;
 	}
